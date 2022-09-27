@@ -78,11 +78,12 @@ public class FinalSeg {
             if (Objects.isNull(is)) throw new FileNotFoundException("dictionary file not found");
             BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             emit = new HashMap<>();
-            Map<Character, Double> values = new HashMap<>();
+            Map<Character, Double> values = null;
             while (br.ready()) {
                 String line = br.readLine();
                 String[] tokens = line.split("\t");
                 if (tokens.length == 1) {
+                    values = new HashMap<>();
                     emit.put(tokens[0].charAt(0), values);
                 } else {
                     values.put(tokens[0].charAt(0), Double.valueOf(tokens[1]));

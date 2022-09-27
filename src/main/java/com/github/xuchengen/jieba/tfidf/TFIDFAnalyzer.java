@@ -2,7 +2,6 @@ package com.github.xuchengen.jieba.tfidf;
 
 import com.github.xuchengen.jieba.JiebaException;
 import com.github.xuchengen.jieba.JiebaSegmenter;
-import com.github.xuchengen.jieba.SegToken;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,12 +86,11 @@ public class TFIDFAnalyzer {
         Map<String, Double> tfMap = new HashMap<>();
         if (content == null || content.equals(StringUtils.EMPTY)) return tfMap;
 
-        List<SegToken> tokens = JIEBA_SEGMENTER.process(content, JiebaSegmenter.SegMode.INDEX);
+        List<String> words = JIEBA_SEGMENTER.sentenceProcess(content);
         Map<String, Integer> freqMap = new HashMap<>();
 
         int wordSum = 0;
-        for (SegToken segToken : tokens) {
-            String word = segToken.word;
+        for (String word : words) {
             //停用词不予考虑，单字词不予考虑，标点符号词不予考虑
             if (!stopWordsSet.contains(word) && word.length() > 1) {
                 word = word.replaceAll("\\p{P}", StringUtils.EMPTY);
